@@ -6,6 +6,8 @@ import App from "./App.tsx";
 
 import Home from "./pages/Home.tsx";
 import Ninjas from "./pages/Ninjas.tsx";
+import NinjaDetail from "./pages/NinjaDetails.tsx";
+import Villages from "./pages/Villages.tsx";
 
 import "./index.css";
 
@@ -29,10 +31,23 @@ const router = createBrowserRouter([
 					return getData("http://localhost:4242/api/ninjas/");
 				},
 			},
-			// {
-			// 	path: "/villages",
-			// 	element: <Villages />,
-			// },
+			{
+				path: "/ninjas/:id",
+				element: <NinjaDetail />,
+				loader: async ({ params }) => {
+					const result = await getData(
+						`http://localhost:4242/api/ninjas/${params.id}`,
+					);
+					return result.data;
+				},
+			},
+			{
+				path: "/villages",
+				element: <Villages />,
+				loader: () => {
+					return getData("http://localhost:4242/api/villages/");
+				},
+			},
 			// {
 			// 	path: "/jutsus",
 			// 	element: <Jutsus />,

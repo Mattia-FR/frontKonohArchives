@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, Link } from "react-router-dom";
 
 function Ninjas() {
 	const resultLoaderNinjas = useLoaderData() as string;
@@ -9,7 +9,9 @@ function Ninjas() {
 		<main>
 			{ninjas.map((ninja) => (
 				<div key={ninja.id}>
-					<h2>{ninja.name}</h2>
+					<Link to={`/ninjas/${ninja.id}`}>
+						<h2>{ninja.name}</h2>
+					</Link>
 				</div>
 			))}
 		</main>
