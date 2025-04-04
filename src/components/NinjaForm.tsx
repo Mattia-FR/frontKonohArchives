@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import "./NinjaForm.css";
 
 function NinjaForm() {
 	const rankOptions = ["Genin", "Chunin", "Jonin", "Anbu", "Sannin", "Kage"];
@@ -17,9 +18,7 @@ function NinjaForm() {
 		{ id: 10, name: "Hoshigakure" },
 	];
 
-	// État initial pour les champs du formulaire
 	const [ninja, setNinja] = useState({
-		id: "", // ID pour modifier ou supprimer un ninja existant
 		name: "",
 		age: "",
 		clan: "",
@@ -29,7 +28,6 @@ function NinjaForm() {
 		gender: "",
 	});
 
-	// Gestionnaire de changement pour tous les champs
 	const handleChange = (
 		e: React.ChangeEvent<
 			HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
@@ -41,7 +39,6 @@ function NinjaForm() {
 		});
 	};
 
-	// Appel POST pour ajouter un ninja
 	const handleAdd = async () => {
 		try {
 			const response = await axios.post(
@@ -49,58 +46,23 @@ function NinjaForm() {
 				ninja,
 			);
 			console.log("Ninja ajouté, ID :", response.data.id);
-			// Optionnel : réinitialiser le formulaire ou mettre à jour la liste
+			setNinja({
+				name: "",
+				age: "",
+				clan: "",
+				rank: "",
+				description: "",
+				village_id: "",
+				gender: "",
+			});
 		} catch (error) {
 			console.error("Erreur lors de l'ajout :", error);
 		}
 	};
 
-	// Appel PUT pour modifier un ninja
-	const handleEdit = async () => {
-		if (!ninja.id) {
-			alert("Veuillez saisir l'ID du ninja à modifier.");
-			return;
-		}
-		try {
-			await axios.put(`http://localhost:4242/api/ninjas/${ninja.id}`, ninja);
-			console.log("Ninja modifié.");
-		} catch (error) {
-			console.error("Erreur lors de la modification :", error);
-		}
-	};
-
-	// Appel DELETE pour supprimer un ninja
-	const handleDelete = async () => {
-		if (!ninja.id) {
-			alert("Veuillez saisir l'ID du ninja à supprimer.");
-			return;
-		}
-		try {
-			await axios.delete(`http://localhost:4242/api/ninjas/${ninja.id}`);
-			console.log("Ninja supprimé.");
-			// Optionnel : réinitialiser le formulaire
-		} catch (error) {
-			console.error("Erreur lors de la suppression :", error);
-		}
-	};
-
 	return (
-		<form
-			onSubmit={(e) => e.preventDefault()}
-			style={{ maxWidth: 400, margin: "0 auto" }}
-		>
-			<h2>Gestion des Ninjas</h2>
-
-			<label>
-				ID (pour modifier/supprimer) :
-				<input
-					type="text"
-					name="id"
-					value={ninja.id}
-					onChange={handleChange}
-					placeholder="Ex : 3"
-				/>
-			</label>
+		<form onSubmit={(e) => e.preventDefault()} className="blocForm">
+			<h3>Ajouter un Ninja</h3>
 
 			<label>
 				Nom :
@@ -185,15 +147,9 @@ function NinjaForm() {
 				</select>
 			</label>
 
-			<div style={{ marginTop: 20 }}>
-				<button type="button" onClick={handleAdd} style={{ marginRight: 10 }}>
+			<div>
+				<button type="button" onClick={handleAdd}>
 					Ajouter
-				</button>
-				<button type="button" onClick={handleEdit} style={{ marginRight: 10 }}>
-					Modifier
-				</button>
-				<button type="button" onClick={handleDelete}>
-					Supprimer
 				</button>
 			</div>
 		</form>

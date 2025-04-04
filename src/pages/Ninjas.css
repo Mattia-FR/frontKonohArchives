@@ -1,0 +1,31 @@
+.blocNinjas {
+	display: flex;
+	flex-direction: column;
+	max-width: 800px;
+	margin: auto;
+	align-items: center;
+	h2 {
+		font-family: var(--font-title);
+		color: #ff9800;
+		font-size: 3rem;
+		margin: 2rem 0;
+		text-align: center;
+	}
+	a {
+		color: #1976d2;
+		text-decoration: none;
+	}
+	p {
+		font-family: var(--font-text);
+	}
+	.listNinjas {
+		section {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 1rem;
+			div {
+				flex: 1 1 150px;
+			}
+		}
+	}
+}
